@@ -3,6 +3,9 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -26,12 +29,12 @@ if (process.env.NODE_ENV === 'production') {
 
 import { authRoutes } from './api/auth/auth.routes.js'
 import { userRoutes } from './api/user/user.routes.js'
-// import { dashboardRoutes } from './api/dashboard/dashboard.routes.js'
+import { dashboardRoutes } from './api/dashboard/dashboard.routes.js'
 // import { feedbackRoutes } from './api/feedback/feedback.routes.js'
 
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
-// app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/dashboard', dashboardRoutes)
 // app.use('/api/feedback', feedbackRoutes)
 
 // app.get('/**', (req,res) => {

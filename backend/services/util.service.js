@@ -1,5 +1,6 @@
 export const utilService = {
     makeId,
+    normalizeDateToUtcStart
 }
 
 function makeId(length = 5) {
@@ -10,4 +11,10 @@ function makeId(length = 5) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length))
     }
     return txt
+}
+
+function normalizeDateToUtcStart(date) {
+  const d = new Date(date);
+  d.setUTCHours(0, 0, 0, 0);
+  return d;
 }

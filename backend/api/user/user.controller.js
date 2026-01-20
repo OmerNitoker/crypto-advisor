@@ -25,6 +25,7 @@ export async function getUser(req, res) {
 
 export async function updateUser(req, res) {
     try {
+        //req.body = {_id, onboardingCompleted, preferences}
         const user = req.body
         const savedUser = await userService.update(user)
         res.send(savedUser)
