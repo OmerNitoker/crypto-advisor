@@ -1,6 +1,7 @@
 import { utilService } from "../../services/util.service.js"
 import { dbService } from "../../services/db.service.js";
 import { ObjectId } from "mongodb";
+import { coinGeckoService } from "../../services/coinGecko.service.js";
 
 export const dashboardService = {
     getSnapshot
@@ -8,6 +9,7 @@ export const dashboardService = {
 
 async function getSnapshot(userId) {
     const dateNormalized = utilService.normalizeDateToUtcStart(new Date())
+
     try {
         const userCollection = await dbService.getCollection('user')
         const user = await userCollection.findOne({ _id: new ObjectId(userId) })
@@ -60,6 +62,7 @@ async function _buildSnapshot({ user, dateNormalized, dashboardCollection }) {
 }
 
 async function fetchNews(preferences) {
+
     return [
         {
             id: 'static:news-1',
@@ -72,24 +75,27 @@ async function fetchNews(preferences) {
 }
 
 async function fetchCoins(preferences) {
-    return [
-    {
-      id: 'bitcoin',
-      symbol: 'BTC',
-      name: 'Bitcoin',
-      currency: 'USD',
-      price: 42000,
-      change24h: 2.5,
-    },
-    {
-      id: 'ethereum',
-      symbol: 'ETH',
-      name: 'Ethereum',
-      currency: 'USD',
-      price: 2600,
-      change24h: -1.2,
-    },
-  ]
+    const prices = coinGeckoService.getCoinsPrices(preferences.assets, 'usd')
+    console.log('prices:', prices)
+    return prices
+    //     return [
+    //     {
+    //       id: 'bitcoin',
+    //       symbol: 'BTC',
+    //       name: 'Bitcoin',
+    //       currency: 'USD',
+    //       price: 42000,
+    //       change24h: 2.5,
+    //     },
+    //     {
+    //       id: 'ethereum',
+    //       symbol: 'ETH',
+    //       name: 'Ethereum',
+    //       currency: 'USD',
+    //       price: 2600,
+    //       change24h: -1.2,
+    //     },
+    //   ]
 }
 
 async function generateAiInsight(preferences) {
@@ -99,8 +105,8 @@ async function generateAiInsight(preferences) {
 
 async function getRandomMeme(preferences) {
     return {
-    id: 'static:hodl-meme-1',
-    url: 'https://your-static-cdn.com/memes/hodl1.jpg',
-    title: 'HODL like there’s no tomorrow',
-  }
+        id: 'static:hodl-meme-1',
+        url: 'https://your-static-cdn.com/memes/hodl1.jpg',
+        title: 'HODL like there’s no tomorrow',
+    }
 }

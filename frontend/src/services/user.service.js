@@ -10,7 +10,8 @@ export const userService = {
     signupUser,
     updateUser,
     setLoggedinUser,
-    logoutUser
+    logoutUser,
+    getDefaultPrefs
 }
 
 async function loginUser({ email, password }) {
@@ -38,8 +39,8 @@ async function signupUser(credentials) {
     }
 }
 
-async function updateUser(updatedUser) {
-    await httpService.put(BASE_URL_USER + updatedUser._id, updatedUser)
+async function updateUser(userUpdates) {
+    const updatedUser = await httpService.put(BASE_URL_USER + userUpdates._id, userUpdates)
     setLoggedinUser(updatedUser)
     return updatedUser;
 }
@@ -55,4 +56,12 @@ function setLoggedinUser(user) {
 
 function logoutUser() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+}
+
+function getDefaultPrefs() {
+    return {
+        assets: [],
+        investorType: "",
+        contentTypes: []
+    }
 }

@@ -37,6 +37,7 @@ export function AuthProvider({ children }) {
 
     try {
       const updatedUser = await userService.updateUser(user)
+      console.log('updatedUser:', updatedUser)
       setUser(updatedUser)
       return updatedUser
     } finally {

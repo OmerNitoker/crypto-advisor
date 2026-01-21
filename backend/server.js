@@ -30,12 +30,12 @@ if (process.env.NODE_ENV === 'production') {
 import { authRoutes } from './api/auth/auth.routes.js'
 import { userRoutes } from './api/user/user.routes.js'
 import { dashboardRoutes } from './api/dashboard/dashboard.routes.js'
-// import { feedbackRoutes } from './api/feedback/feedback.routes.js'
+import { feedbackRoutes } from './api/feedback/feedback.routes.js'
 
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/dashboard', dashboardRoutes)
-// app.use('/api/feedback', feedbackRoutes)
+app.use('/api/feedback', feedbackRoutes)
 
 // app.get('/**', (req,res) => {
 //     res.sendFile(path.resolve('public/index.html'))

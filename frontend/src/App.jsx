@@ -32,9 +32,10 @@ export function App() {
           <Route path="/onboarding" element={
             !user ?
               <Navigate to="/login" replace /> :
-              user.onboardingCompleted ?
-                <Navigate to="/" replace /> :
-                <Onboarding user={user} />
+              <Onboarding user={user} />
+              // user.onboardingCompleted ?
+              //   <Navigate to="/" replace /> :
+              //   <Onboarding user={user} />
           }
           />
 

@@ -26,8 +26,8 @@ export async function getUser(req, res) {
 export async function updateUser(req, res) {
     try {
         //req.body = {_id, onboardingCompleted, preferences}
-        const user = req.body
-        const savedUser = await userService.update(user)
+        const updates = req.body
+        const savedUser = await userService.update(updates)
         res.send(savedUser)
     } catch (err) {
         console.log('Failed to update user', err)
