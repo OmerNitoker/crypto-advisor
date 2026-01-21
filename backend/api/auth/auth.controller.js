@@ -16,7 +16,6 @@ export async function login(req, res) {
 export async function signup(req, res) {
     try {
         const { name, email, password } = req.body
-
         const account = await authService.signup(name, email, password )
         const user = await authService.login(email, password)
         const loginToken = authService.getLoginToken(user)
