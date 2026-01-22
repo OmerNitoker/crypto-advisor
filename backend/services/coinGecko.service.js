@@ -2,7 +2,7 @@
 // import fetch from 'node-fetch'
 
 export const coinGeckoService = {
-    getCoinsPrices
+  getCoinsPrices
 }
 
 const SYMBOL_TO_ID = {
@@ -14,7 +14,6 @@ const SYMBOL_TO_ID = {
 }
 
 async function getCoinsPrices(symbols, vsCurrency = 'usd') {
-  // סינון סימולים שאין לנו להם mapping
   const ids = symbols
     .map((sym) => SYMBOL_TO_ID[sym.toUpperCase()])
     .filter(Boolean)
@@ -27,13 +26,12 @@ async function getCoinsPrices(symbols, vsCurrency = 'usd') {
 
   const res = await fetch(url);
   if (!res.ok) {
-    console.error('Failed to fetch CoinGecko prices', await res.text());
-    throw new Error('Failed to fetch coin prices');
+    console.error('CoinGecko HTTP error', res.status, await res.text())
+    return []
   }
 
   const data = await res.json();
 
-  // מחזיר בפורמט שהפרונט כבר מכיר
   return Object.entries(data).map(([id, value]) => {
     const symbol = Object.entries(SYMBOL_TO_ID).find(
       ([sym, mappedId]) => mappedId === id
