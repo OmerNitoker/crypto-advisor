@@ -25,8 +25,10 @@ async function getCollection(collectionName) {
 async function _connect() {
     if (dbConn) return dbConn
     try {
-        const client = await MongoClient.connect(config.dbURL)
-        // const client = await MongoClient.connect('mongodb+srv://omernitoker_db_user:vB7uuYRUvXKsKPfl@cluster1.3njujgr.mongodb.net/')
+        const client = await MongoClient.connect(config.dbURL, {
+            tls: true,
+            tlsAllowInvalidCertificates: true
+        })
 
         const db = client.db(config.dbName)
         // const db = client.db('crypto-advisor')
