@@ -14,14 +14,14 @@ const app = express()
 
 app.use(cookieParser())
 app.use(express.json())
-// app.use(express.static('public'))
+app.use(express.static('public'))
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')))
     console.log('__dirname: ', __dirname)
 } else {
     const corOptions = {
-        origin: ['http://127.0.0.1:5173', 'http://localhost:5173','http://127.0.0.1:3000', 'http://localhost:3000'],
+        origin: ['http://127.0.0.1:5173', 'http://localhost:5173', 'http://127.0.0.1:3000', 'http://localhost:3000'],
         credentials: true
     }
     app.use(cors(corOptions))
@@ -37,9 +37,9 @@ app.use('/api/user', userRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/feedback', feedbackRoutes)
 
-// app.get('/**', (req,res) => {
-//     res.sendFile(path.resolve('public/index.html'))
-// })
+app.get(/.*/, (req,res) => {
+    res.sendFile(path.resolve('public/index.html'))
+})
 
 app.get('/', (req, res) => {
     res.send('<h1>CRYPTO ADVISOR</h1>')

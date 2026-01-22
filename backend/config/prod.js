@@ -1,4 +1,4 @@
 export default {
     dbURL: process.env.MONGODB_URI,
-    dbName: 'crypto-advisor_db'
+    dbName: 'crypto-advisor'
 }
