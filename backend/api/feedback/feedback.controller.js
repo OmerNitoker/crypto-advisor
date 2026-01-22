@@ -10,9 +10,15 @@ export async function addFeedback(req, res) {
         const { section, vote, snapshotId, targetId } = req.body
 
         const numVote = Number(vote)
-
-        if (numVote !== 1 && numVote !== -1) {
-            return res.status(400).send({ error: 'Vote must be 1 or -1' })
+        if (vote === 0) {
+            console.log('ID:', loggedinUser._id)
+            await feedbackService.remove({
+                userId: loggedinUser._id,
+                section,
+                snapshotId,
+                targetId,
+            })
+            return res.status(204).end()
         }
 
         const savedFeedback = await feedbackService.add({

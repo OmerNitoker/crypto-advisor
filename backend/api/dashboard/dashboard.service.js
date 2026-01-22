@@ -2,9 +2,14 @@ import { utilService } from "../../services/util.service.js"
 import { dbService } from "../../services/db.service.js";
 import { ObjectId } from "mongodb";
 import { coinGeckoService } from "../../services/coinGecko.service.js";
+import { newsService } from "../../services/news.service.js";
+import { aiService } from "../../services/ai.service.js";
+import { memeService } from "../../services/meme.service.js";
+
 
 export const dashboardService = {
-    getSnapshot
+    getSnapshot,
+    clearSnapshot
 }
 
 async function getSnapshot(userId) {
@@ -32,13 +37,18 @@ async function getSnapshot(userId) {
 
 }
 
+async function clearSnapshot(userId) {
+    const collection = await dbService.getCollection('dashboardSnapshot');
+    await collection.deleteMany({ userId: new ObjectId(userId) })
+}
+
 async function _buildSnapshot({ user, dateNormalized, dashboardCollection }) {
     const { preferences } = user
     try {
         const news = await fetchNews(preferences)
         const coins = await fetchCoins(preferences)
-        const aiInsight = await generateAiInsight(preferences)
-        const meme = await getRandomMeme(preferences)
+        const aiInsight = await generateAiInsight(preferences, coins, news)
+        const meme = memeService.getRandomMeme()
 
         const snapshotDoc = {
             userId: user._id,
@@ -62,51 +72,14 @@ async function _buildSnapshot({ user, dateNormalized, dashboardCollection }) {
 }
 
 async function fetchNews(preferences) {
-
-    return [
-        {
-            id: 'static:news-1',
-            title: 'Bitcoin surges 5% after ETF approval',
-            url: 'https://example.com/article1',
-            source: 'static',
-            publishedAt: new Date(),
-        }
-    ]
+    return newsService.getCryptoNews(preferences)
 }
 
 async function fetchCoins(preferences) {
-    const prices = coinGeckoService.getCoinsPrices(preferences.assets, 'usd')
-    console.log('prices:', prices)
-    return prices
-    //     return [
-    //     {
-    //       id: 'bitcoin',
-    //       symbol: 'BTC',
-    //       name: 'Bitcoin',
-    //       currency: 'USD',
-    //       price: 42000,
-    //       change24h: 2.5,
-    //     },
-    //     {
-    //       id: 'ethereum',
-    //       symbol: 'ETH',
-    //       name: 'Ethereum',
-    //       currency: 'USD',
-    //       price: 2600,
-    //       change24h: -1.2,
-    //     },
-    //   ]
+    return coinGeckoService.getCoinsPrices(preferences.assets, 'usd')
 }
 
-async function generateAiInsight(preferences) {
-    return `Based on your ${preferences?.investorType || 'investor'} profile, today is a good day to review your long-term allocation rather than making impulsive trades.`
-
+async function generateAiInsight(preferences, coins, news) {
+    return aiService.getAiInsight(preferences, coins, news)
 }
 
-async function getRandomMeme(preferences) {
-    return {
-        id: 'static:hodl-meme-1',
-        url: 'https://your-static-cdn.com/memes/hodl1.jpg',
-        title: 'HODL like there’s no tomorrow',
-    }
-}

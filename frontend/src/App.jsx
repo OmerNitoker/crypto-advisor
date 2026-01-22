@@ -1,6 +1,6 @@
 
 // import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 
 import { AppHeader } from './cmps/AppHeader.jsx';
@@ -8,17 +8,27 @@ import { LoginSignup } from './pages/LoginSignup.jsx';
 import { Onboarding } from './pages/Onboarding.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { userService } from './services/user.service.js';
-// import './assets/style/main.scss'
+import './assets/style/main.scss'
 import { useAuth } from './hooks/useAuth'
+import { useEffect, useState } from 'react';
 
 
 export function App() {
+  const location = useLocation()
   const { user } = useAuth()
-  return (
-    <div className="app-root">
-      <AppHeader user={user} />
 
-      <main style={{ padding: '1rem' }}>
+  const [isOnLoginPage, setIsOnLoginPage] = useState(false)
+
+  useEffect(() => {
+    if (location.pathname.includes('/login')) setIsOnLoginPage(true)
+    else setIsOnLoginPage(false)
+  }, [location.pathname])
+
+  return (
+    <div className="app-shell">
+      {!isOnLoginPage && <AppHeader user={user} />}
+
+      <main className="app-main" >
         <Routes>
           <Route path="/login" element={
             !user ?
@@ -33,9 +43,9 @@ export function App() {
             !user ?
               <Navigate to="/login" replace /> :
               <Onboarding user={user} />
-              // user.onboardingCompleted ?
-              //   <Navigate to="/" replace /> :
-              //   <Onboarding user={user} />
+            // user.onboardingCompleted ?
+            //   <Navigate to="/" replace /> :
+            //   <Onboarding user={user} />
           }
           />
 

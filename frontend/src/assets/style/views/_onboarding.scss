@@ -1,0 +1,190 @@
+.onboarding-page {
+    max-width: 640px;
+    margin: 1.75rem auto 2.5rem;
+    padding: 0 1rem;
+}
+
+.onboarding-card {
+    min-width: 50vw;
+    margin-block-start: 120px;
+    background-color: $color-surface;
+    border-radius: $radius-lg;
+    border: 1px solid rgba($color-border-subtle, 0.9);
+    box-shadow: $shadow-soft;
+    padding: 1.6rem 1.8rem 1.5rem;
+}
+
+.onboarding-header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.onboarding-title {
+    margin: 0 0 0.35rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $color-text-main;
+}
+
+.onboarding-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: $color-text-muted;
+}
+
+.onboarding-steps {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+}
+
+.onboarding-step-pill {
+    flex: 1;
+    border-radius: $radius-pill;
+    border: 1px solid $color-border-subtle;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    color: $color-text-muted;
+    background-color: #f9fafb;
+}
+
+.onboarding-step-pill--active {
+    background-color: $color-primary-soft;
+    border-color: rgba($color-primary, 0.5);
+    color: $color-text-main;
+}
+
+.onboarding-step-pill__index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background-color: #e5edff;
+    color: $color-primary;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.onboarding-step-pill__label {
+    white-space: nowrap;
+}
+
+.onboarding-step-counter {
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+    color: $color-text-muted;
+}
+
+/* Body */
+
+.onboarding-form {
+    margin-top: 0.4rem;
+}
+
+.onboarding-body {
+    margin-top: 0.9rem;
+}
+
+.onboarding-step-section {
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.onboarding-question {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $color-text-main;
+}
+
+.onboarding-hint {
+    margin: 0 0 0.9rem;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+}
+
+.option-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.option-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border-radius: $radius-pill;
+    border: 1px solid $color-border-subtle;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background-color: #f9fafb;
+    transition: background-color 0.12s ease, border-color 0.12s ease,
+        transform 0.06s ease;
+}
+
+.option-pill input {
+    display: none;
+}
+
+.option-pill__label {
+    white-space: nowrap;
+}
+
+.option-pill:hover {
+    background-color: #f3f4f6;
+}
+
+.option-pill--selected {
+    background-color: $color-primary-soft;
+    border-color: rgba($color-primary, 0.55);
+}
+
+.onboarding-error {
+    margin-top: 0.75rem;
+}
+
+.onboarding-loading {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+}
+
+
+.onboarding-footer {
+    margin-top: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+    .onboarding-card {
+        padding: 1.3rem 1.2rem 1.2rem;
+    }
+
+    .onboarding-steps {
+        flex-direction: column;
+    }
+
+    .onboarding-step-pill {
+        justify-content: flex-start;
+    }
+
+    .onboarding-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .onboarding-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

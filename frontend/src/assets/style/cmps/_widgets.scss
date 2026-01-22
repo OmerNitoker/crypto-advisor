@@ -1,0 +1,207 @@
+.widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.widget-header__title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.widget-header__meta {
+    font-size: 0.8rem;
+    color: $color-text-muted;
+}
+
+.widget-body {
+    flex: 1;
+    min-height: 0;
+}
+
+.widget-body--centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget-footer {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: $color-text-muted;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.widget-footer--right {
+    justify-content: flex-end;
+}
+
+.news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.news-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
+}
+
+.news-item__main {
+    flex: 1;
+    min-width: 0;
+}
+
+.news-item__title {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.news-item__title a {
+    color: $color-text-main;
+    text-decoration: none;
+}
+
+.news-item__title a:hover {
+    text-decoration: underline;
+}
+
+.news-item__source {
+    font-size: 0.8rem;
+    color: $color-text-muted;
+}
+
+.news-item__vote {
+    display: flex;
+    align-items: center;
+}
+
+/* PRICES TABLE */
+
+.prices-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.prices-table th,
+.prices-table td {
+    padding: 0.25rem 0;
+}
+
+.prices-table th {
+    text-align: left;
+    font-weight: 500;
+    color: $color-text-muted;
+    border-bottom: 1px solid $color-border-subtle;
+}
+
+.prices-table td {
+    border-bottom: 1px solid rgba(226, 228, 234, 0.5);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-change-positive {
+    color: #16a34a;
+}
+
+.text-change-negative {
+    color: $color-danger;
+}
+
+.prices-empty {
+    font-size: 0.9rem;
+    color: $color-text-muted;
+}
+
+/* AI Insight */
+
+.ai-insight-text {
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.ai-insight-text--empty {
+    color: $color-text-muted;
+}
+
+/* Meme */
+
+.widget-meme {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.meme-image {
+    display: block;
+    width: 100%;
+    max-height: 220px;
+    border-radius: $radius-md;
+    object-fit: cover;
+}
+
+.meme-empty {
+    font-size: 0.9rem;
+    color: $color-text-muted;
+}
+
+.btn {
+    border: none;
+    border-radius: $radius-md;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    color: $color-text-main;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.btn-primary {
+    background-color: $color-primary;
+    color: #ffffff;
+    box-shadow: $shadow-subtle;
+}
+
+.btn-primary:hover:not(:disabled) {
+    filter: brightness(0.96);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: $color-text-main;
+    border: 1px solid $color-border-subtle;
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background-color: #f9fafb;
+}
+
+.meme-img {
+    width: 100%;
+    max-height: 330px; // מספיק כדי שלא יהיה מפלצתי
+    object-fit: contain;
+    border-radius: 8px;
+
+    /* נותן קצת "פרודקט" */
+    background: #f8fafc; // slate-50 vibes
+    padding: 6px;
+}

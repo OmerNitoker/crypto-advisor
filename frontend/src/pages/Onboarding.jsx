@@ -3,28 +3,26 @@ import { userService } from "../services/user.service";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router";
 
-const ASSET_OPTIONS = ['BTC', 'ETH', 'SOL', 'BNB', 'DOGE']
-const INVESTOR_TYPES = ['HODLer', 'Day Trader', 'DeFi Explorer', 'NFT Collector']
-const CONTENT_TYPES = ['Market News', 'Charts', 'On-chain Data', 'Fun']
-
+const ASSET_OPTIONS = ['BTC', 'ETH', 'SOL', 'BNB', 'DOGE'];
+const INVESTOR_TYPES = ['HODLer', 'Day Trader', 'DeFi Explorer', 'NFT Collector'];
+const CONTENT_TYPES = ['Market News', 'Charts', 'On-chain Data', 'Fun'];
 
 export function Onboarding() {
-
-    const navigate = useNavigate()
-    const { user } = useAuth()
-    const [step, setStep] = useState(1)
-    const [assets, setAssets] = useState(user?.preferences?.assets || [])
-    const [investorType, setInvestorType] = useState(user?.preferences?.investorType || '')
-    const [contentTypes, setContentTypes] = useState(user?.preferences?.contentTypes || [])
-    const [isSubmitting, setIsSubmitting] = useState(false)
+    const navigate = useNavigate();
+    const { user } = useAuth();
+    const [step, setStep] = useState(1);
+    const [assets, setAssets] = useState(user?.preferences?.assets || []);
+    const [investorType, setInvestorType] = useState(user?.preferences?.investorType || '');
+    const [contentTypes, setContentTypes] = useState(user?.preferences?.contentTypes || []);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
 
-    const { update } = useAuth()
+    const { update } = useAuth();
 
     function handleStepChange(diff) {
-         setError('')
-        if (step + diff > 3 || step + diff < 1) return
-        setStep((prevStep) => prevStep + diff)
+        setError('');
+        if (step + diff > 3 || step + diff < 1) return;
+        setStep((prevStep) => prevStep + diff);
     }
 
     function toggleInArray(value, arr, setFn) {
@@ -43,14 +41,14 @@ export function Onboarding() {
     }
 
     async function handleSubmit(ev) {
-        ev.preventDefault()
+        ev.preventDefault();
 
         if (!canGoNext()) {
             setError('Please fill in this step before continuing');
             return;
         }
 
-        setIsSubmitting(true)
+        setIsSubmitting(true);
 
         try {
             const userUpdates = {
@@ -58,14 +56,12 @@ export function Onboarding() {
                 preferences: {
                     assets,
                     investorType,
-                    contentTypes
+                    contentTypes,
                 },
-                onboardingCompleted: true
+                onboardingCompleted: true,
             }
-
-            await update(userUpdates)
-            navigate('/')
-
+            await update(userUpdates);
+            navigate('/');
         } catch (err) {
             setError(err.message || 'Something went wrong');
             setIsSubmitting(false);
@@ -73,101 +69,179 @@ export function Onboarding() {
     }
 
     return (
-        <section style={{ maxWidth: 600, margin: '2rem auto' }}>
-            <h1>Tell us about your crypto interests</h1>
-            <p>Step {step} of 3</p>
-
-            <form onSubmit={handleSubmit}>
-                {step === 1 && (
-                    <div>
-                        <h2>Which crypto assets are you interested in?</h2>
-                        {ASSET_OPTIONS.map((asset) => (
-                            <label key={asset} style={{ display: 'block', marginBottom: '0.25rem' }}>
-                                <input
-                                    type="checkbox"
-                                    name="assets"
-                                    checked={assets.includes(asset)}
-                                    onChange={() => toggleInArray(asset, assets, setAssets)}
-                                />{' '}
-                                {asset}
-                            </label>
-                        ))}
-                    </div>
-                )}
-                {step === 2 && (
-                    <div>
-                        <h2>What kind of crypto investor are you?</h2>
-                        {INVESTOR_TYPES.map((type) => (
-                            <label key={type} style={{ display: 'block', marginBottom: '0.25rem' }}>
-                                <input
-                                    type="radio"
-                                    name="investorType"
-                                    value={type}
-                                    checked={investorType === type}
-                                    onChange={() => setInvestorType(type)}
-                                />{' '}
-                                {type}
-                            </label>
-                        ))}
-                    </div>
-                )}
-                {step === 3 && (
-                    <div>
-                        <h2>What kind of content do you want to see?</h2>
-                        {CONTENT_TYPES.map((ct) => (
-                            <label key={ct} style={{ display: 'block', marginBottom: '0.25rem' }}>
-                                <input
-                                    type="checkbox"
-                                    checked={contentTypes.includes(ct)}
-                                    onChange={() => toggleInArray(ct, contentTypes, setContentTypes)}
-                                />{' '}
-                                {ct}
-                            </label>
-                        ))}
-                    </div>
-                )}
-
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-
-                {isSubmitting && (
-                    <p style={{ marginTop: '1rem' }}>
-                        Building your personalized dashboard...
+        <section className="onboarding-page">
+            <div className="onboarding-card">
+                <header className="onboarding-header">
+                    <h1 className="onboarding-title">Tell us about your crypto interests</h1>
+                    <p className="onboarding-subtitle">
+                        We&apos;ll use this to tailor your daily crypto dashboard.
                     </p>
-                )}
 
-                <div style={{ marginTop: '1.5rem' }}>
+                    <div className="onboarding-steps">
+                        <div className={
+                            "onboarding-step-pill" + (step === 1 ? " onboarding-step-pill--active" : "")
+                        }>
+                            <span className="onboarding-step-pill__index">1</span>
+                            <span className="onboarding-step-pill__label">Assets</span>
+                        </div>
+                        <div className={
+                            "onboarding-step-pill" + (step === 2 ? " onboarding-step-pill--active" : "")
+                        }>
+                            <span className="onboarding-step-pill__index">2</span>
+                            <span className="onboarding-step-pill__label">Profile</span>
+                        </div>
+                        <div className={
+                            "onboarding-step-pill" + (step === 3 ? " onboarding-step-pill--active" : "")
+                        }>
+                            <span className="onboarding-step-pill__index">3</span>
+                            <span className="onboarding-step-pill__label">Content</span>
+                        </div>
+                    </div>
+                </header>
 
-                    <button
-                        type="button"
-                        onClick={() => handleStepChange(-1)}
-                        disabled={step === 1 || isSubmitting}
-                        style={{ marginRight: '0.5rem' }}
-                    >
-                        Previous
-                    </button>
+                <form onSubmit={handleSubmit} className="onboarding-form">
+                    <div className="onboarding-body">
+                        {step === 1 && (
+                            <div className="onboarding-step-section">
+                                <h2 className="onboarding-question">
+                                    Which crypto assets are you interested in?
+                                </h2>
+                                <p className="onboarding-hint">
+                                    Pick at least one asset so we can fetch the right prices and news.
+                                </p>
 
-                    {step < 3 && (
+                                <div className="option-group">
+                                    {ASSET_OPTIONS.map((asset) => {
+                                        const selected = assets.includes(asset);
+                                        return (
+                                            <label
+                                                key={asset}
+                                                className={
+                                                    "option-pill" + (selected ? " option-pill--selected" : "")
+                                                }
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    name="assets"
+                                                    checked={selected}
+                                                    onChange={() => toggleInArray(asset, assets, setAssets)}
+                                                />
+                                                <span className="option-pill__label">{asset}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {step === 2 && (
+                            <div className="onboarding-step-section">
+                                <h2 className="onboarding-question">
+                                    What kind of crypto investor are you?
+                                </h2>
+                                <p className="onboarding-hint">
+                                    This helps us tune the tone of your AI insights.
+                                </p>
+
+                                <div className="option-group">
+                                    {INVESTOR_TYPES.map((type) => {
+                                        const selected = investorType === type;
+                                        return (
+                                            <label
+                                                key={type}
+                                                className={
+                                                    "option-pill" + (selected ? " option-pill--selected" : "")
+                                                }
+                                            >
+                                                <input
+                                                    type="radio"
+                                                    name="investorType"
+                                                    value={type}
+                                                    checked={selected}
+                                                    onChange={() => setInvestorType(type)}
+                                                />
+                                                <span className="option-pill__label">{type}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {step === 3 && (
+                            <div className="onboarding-step-section">
+                                <h2 className="onboarding-question">
+                                    What kind of content do you want to see?
+                                </h2>
+                                <p className="onboarding-hint">
+                                    Choose the mix that best fits how you like to follow the market.
+                                </p>
+
+                                <div className="option-group">
+                                    {CONTENT_TYPES.map((ct) => {
+                                        const selected = contentTypes.includes(ct);
+                                        return (
+                                            <label
+                                                key={ct}
+                                                className={
+                                                    "option-pill" + (selected ? " option-pill--selected" : "")
+                                                }
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selected}
+                                                    onChange={() => toggleInArray(ct, contentTypes, setContentTypes)}
+                                                />
+                                                <span className="option-pill__label">{ct}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {error && <p className="form-error onboarding-error">{error}</p>}
+
+                    {isSubmitting && (
+                        <p className="onboarding-loading">
+                            Building your personalized dashboard...
+                        </p>
+                    )}
+
+                    <div className="onboarding-footer">
                         <button
                             type="button"
-                            onClick={() => handleStepChange(1)}
-                            disabled={!canGoNext() || isSubmitting}
+                            onClick={() => handleStepChange(-1)}
+                            disabled={step === 1 || isSubmitting}
+                            className="btn btn-ghost"
                         >
-                            Next
+                            Previous
                         </button>
-                    )}
+                        <p className="onboarding-step-counter">Step {step} of 3</p>
+                        {step < 3 && (
+                            <button
+                                type="button"
+                                onClick={() => handleStepChange(1)}
+                                disabled={!canGoNext() || isSubmitting}
+                                className="btn btn-primary"
+                            >
+                                Next
+                            </button>
+                        )}
 
-                    {step === 3 && (
-                        <button
-                            type="submit"
-                            disabled={!canGoNext() || isSubmitting}
-                            style={{ marginLeft: '0.5rem' }}
-                        >
-                            Finish &amp; build my dashboard
-                        </button>
-                    )}
-                </div>
-
-            </form>
-        </section >
-    )
+                        {step === 3 && (
+                            <button
+                                type="submit"
+                                disabled={!canGoNext() || isSubmitting}
+                                className="btn btn-primary"
+                            >
+                                build my dashboard
+                            </button>
+                        )}
+                    </div>
+                </form>
+            </div>
+        </section>
+    );
 }

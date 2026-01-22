@@ -1,26 +1,27 @@
-// frontend/src/components/dashboard/VoteButtons.jsx
 import { useState } from 'react';
 import { feedbackService } from '../services/feedback.service';
 
 export function VoteButtons({ section, snapshotId, targetId }) {
-    const [currentVote, setCurrentVote] = useState(0)
-    const [isSending, setIsSending] = useState(false)
-    const [error, setError] = useState('')
+    const [currentVote, setCurrentVote] = useState(0); // 1 = like, -1 = dislike, 0 = none
+    const [isSending, setIsSending] = useState(false);
+    const [error, setError] = useState('');
 
     async function handleVote(voteValue) {
-        if (isSending) return
+        if (isSending) return;
 
         const newVote = currentVote === voteValue ? 0 : voteValue;
-        if (newVote === 0) {
-            setCurrentVote(0);
-            return;
-        }
 
+        setCurrentVote(newVote);
         setIsSending(true);
         setError('');
+
         try {
-            await feedbackService.addFeedback({ section, vote: voteValue, snapshotId, targetId })
-            setCurrentVote(voteValue);
+            await feedbackService.addFeedback({
+                section,
+                vote: newVote,
+                snapshotId,
+                targetId,
+            });
         } catch (err) {
             setError(err.message || 'Failed to send feedback');
         } finally {
@@ -28,39 +29,52 @@ export function VoteButtons({ section, snapshotId, targetId }) {
         }
     }
 
+    const likeSrc =
+        currentVote === 1 ? '/imgs/like.png' : '/imgs/like-empty.png';
+    const dislikeSrc =
+        currentVote === -1 ? '/imgs/dislike.png' : '/imgs/dislike-empty.png';
+
     return (
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+        <div className="vote-buttons">
             <button
                 type="button"
+                className={
+                    'vote-buttons__btn' +
+                    (currentVote === 1 ? ' vote-buttons__btn--active' : '')
+                }
                 onClick={() => handleVote(1)}
                 disabled={isSending}
-                style={{
-                    fontSize: '0.9rem',
-                    padding: '0.15rem 0.4rem',
-                    opacity: currentVote === 1 ? 1 : 0.6,
-                }}
+                aria-label="Like"
             >
-                👍
+                <img
+                    src={likeSrc}
+                    alt="Like"
+                    className="vote-buttons__icon"
+                />
             </button>
+
             <button
                 type="button"
+                className={
+                    'vote-buttons__btn' +
+                    (currentVote === -1 ? ' vote-buttons__btn--active-down' : '')
+                }
                 onClick={() => handleVote(-1)}
                 disabled={isSending}
-                style={{
-                    fontSize: '0.9rem',
-                    padding: '0.15rem 0.4rem',
-                    opacity: currentVote === -1 ? 1 : 0.6,
-                }}
+                aria-label="Dislike"
             >
-                👎
+                <img
+                    src={dislikeSrc}
+                    alt="Dislike"
+                    className="vote-buttons__icon"
+                />
             </button>
+
             {error && (
-                <span style={{ color: 'red', fontSize: '0.75rem', marginLeft: '0.25rem' }}>
+                <span className="vote-buttons__error">
                     {error}
                 </span>
             )}
         </div>
     );
 }
-
-

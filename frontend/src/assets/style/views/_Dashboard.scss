@@ -1,0 +1,66 @@
+.page {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem 2rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-header__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.page-header__subtitle {
+  margin: 0;
+  color: $color-text-muted;
+  font-size: 0.95rem;
+}
+
+.page-header__meta {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: $color-text-muted;
+}
+
+.page-header__actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dashboard-loader {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  font-size: 1.2rem;
+  color: #1e293b; // Tailwind Slate-800 vibes
+
+  span {
+    opacity: 0.85;
+  }
+}
+
+.spinner {
+  width: 55px;
+  height: 55px;
+  border: 6px solid rgba(149, 157, 165, 0.3);
+  border-top-color: #6366f1; // Indigo-500
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

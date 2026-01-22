@@ -1,55 +1,66 @@
 import { VoteButtons } from "./VoteButtons";
 
-
 export function PricesWidget({ coins, snapshotId }) {
+    const hasCoins = coins && coins.length > 0;
+
     return (
-        <div>
-            <h2 style={{ marginTop: 0, marginBottom: '0.5rem' }}>Coin prices</h2>
+        <>
+            <div className="widget-header">
+                <h2 className="widget-header__title">Coin prices</h2>
+                <span className="widget-header__meta">
+                    {hasCoins ? `${coins.length} assets` : 'No price data'}
+                </span>
+            </div>
 
-            {(!coins || coins.length === 0) && (
-                <p style={{ opacity: 0.8 }}>No price data available.</p>
-            )}
+            <div className="widget-body">
+                {!hasCoins && (
+                    <p className="prices-empty">No price data available.</p>
+                )}
 
-            {coins && coins.length > 0 && (
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
-                    <thead>
-                        <tr>
-                            <th align="left">Coin</th>
-                            <th align="right">Price</th>
-                            <th align="right">24h</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {coins.map((coin) => (
-                            <tr key={coin.id || coin.symbol}>
-                                <td>{coin.symbol || coin.name}</td>
-                                <td align="right">
-                                    {coin.price != null ? coin.price.toLocaleString() : '-'}
-                                    {coin.currency ? ` ${coin.currency}` : ''}
-                                    <VoteButtons
-                                        section="coins"
-                                        snapshotId={snapshotId}
-                                        targetId={coin.id || coin.symbol}
-                                    />
-                                </td>
-                                <td
-                                    align="right"
-                                    style={{
-                                        color:
-                                            coin.change24h > 0
-                                                ? 'green'
-                                                : coin.change24h < 0
-                                                    ? 'red'
-                                                    : 'inherit',
-                                    }}
-                                >
-                                    {coin.change24h != null ? `${coin.change24h.toFixed(2)}%` : '-'}
-                                </td>
+                {hasCoins && (
+                    <table className="prices-table">
+                        <thead>
+                            <tr>
+                                <th>Coin</th>
+                                <th className="text-right">Price</th>
+                                <th className="text-right">24h</th>
+                                <th className="text-right">Your vote</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
-    )
+                        </thead>
+                        <tbody>
+                            {coins.map((coin) => {
+                                const change = coin.change24h;
+                                const changeClass =
+                                    change > 0
+                                        ? 'text-change-positive'
+                                        : change < 0
+                                            ? 'text-change-negative'
+                                            : '';
+
+                                return (
+                                    <tr key={coin.id || coin.symbol}>
+                                        <td>{coin.symbol || coin.name}</td>
+                                        <td className="">
+                                            {coin.price != null ? coin.price.toLocaleString() : '-'}
+                                            {coin.currency ? ` ${coin.currency}` : ''}
+                                        </td>
+                                        <td className={` ${changeClass}`}>
+                                            {change != null ? `${change.toFixed(2)}%` : '-'}
+                                        </td>
+                                        <td className="">
+                                            <VoteButtons
+                                                section="coins"
+                                                snapshotId={snapshotId}
+                                                targetId={coin.id || coin.symbol}
+                                            />
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+        </>
+    );
 }

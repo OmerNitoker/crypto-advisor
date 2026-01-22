@@ -3,31 +3,40 @@ import { VoteButtons } from "./VoteButtons";
 export function MemeWidget({ meme, snapshotId }) {
     if (!meme) {
         return (
-            <div>
-                <h2 style={{ marginTop: 0, marginBottom: '0.5rem' }}>Fun crypto meme</h2>
-                <p style={{ opacity: 0.8 }}>No meme for today 😅</p>
-            </div>
+            <>
+                <div className="widget-header">
+                    <h2 className="widget-header__title">Fun crypto meme</h2>
+                </div>
+                <div className="widget-body">
+                    <p className="meme-empty">No meme for today 😅</p>
+                </div>
+            </>
         );
     }
 
     return (
-        <div>
-            <h2 style={{ marginTop: 0, marginBottom: '0.5rem' }}>Fun crypto meme</h2>
-            {meme.title && (
-                <p style={{ marginTop: 0, marginBottom: '0.5rem' }}>{meme.title}</p>
-            )}
-            {meme.url && (
-                <img
-                    src={meme.url}
-                    alt={meme.title || 'Crypto meme'}
-                    style={{ maxWidth: '100%', borderRadius: '6px' }}
+        <div className="widget-meme">
+            <div className="widget-header">
+                <h2 className="widget-header__title">Fun crypto meme</h2>
+            </div>
+
+            <div className="widget-body widget-body--centered">
+                {meme.url && (
+                    <img
+                        src={meme.url}
+                        alt="Crypto meme"
+                        className="meme-img"
+                    />
+                )}
+            </div>
+
+            <div className="widget-footer widget-footer--right">
+                <VoteButtons
+                    section="meme"
+                    snapshotId={snapshotId}
+                    targetId={meme.id || meme.url}
                 />
-            )}
-            <VoteButtons
-                section="meme"
-                snapshotId={snapshotId}
-                targetId={meme.id || meme.url}
-            />
+            </div>
         </div>
-    )
+    );
 }

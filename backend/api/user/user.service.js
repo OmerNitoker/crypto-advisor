@@ -1,5 +1,6 @@
 import { dbService } from "../../services/db.service.js";
 import { ObjectId } from "mongodb"
+import { dashboardService } from "../dashboard/dashboard.service.js";
 
 export const userService = {
     // query,
@@ -69,6 +70,7 @@ async function update(updates) {
         const collection = await dbService.getCollection('user')
         await collection.updateOne({ _id: new ObjectId(updates._id) }, { $set: changesToSave })
         const updatedUser = collection.findOne({ _id: new ObjectId(updates._id) })
+         await dashboardService.clearSnapshot(updates._id);
         return updatedUser
     } catch (err) {
         console.log('Cannot update user')

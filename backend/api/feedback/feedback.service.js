@@ -4,7 +4,8 @@ import { dbService } from '../../services/db.service.js'
 
 
 export const feedbackService = {
-    add
+    add,
+    remove
 }
 
 async function add({ userId, section, vote, snapshotId, targetId }) {
@@ -32,4 +33,21 @@ async function add({ userId, section, vote, snapshotId, targetId }) {
         console.error('Failed to add feedback', err)
         throw err
     }
+}
+
+async function remove({ userId, section, snapshotId, targetId }) {
+    try {
+        const collection = await dbService.getCollection('feedback')
+
+        const criteria = {
+            userId: new ObjectId(userId),
+            section,
+            snapshotId: new ObjectId(snapshotId),
+            targetId
+        }
+        await collection.deleteOne(criteria);
+    } catch(err) {
+        console.log('err:', err)
+    }
+    
 }

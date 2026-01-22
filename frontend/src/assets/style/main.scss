@@ -2,8 +2,15 @@
 @import "setup/variables";
 
 //Basics
+@import "basics/base";
 
 //Pages
 @import "views/LoginSignup";
+@import "views/onboarding";
+@import "views/Dashboard";
 
 //Cmps
+@import "cmps/AppHeader";
+@import "cmps/DashboardGrid";
+@import "cmps/widgets";
+@import "cmps/VoteButtons";
