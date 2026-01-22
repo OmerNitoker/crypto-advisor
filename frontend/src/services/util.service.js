@@ -41,7 +41,7 @@ function getTimeAgo(timestamp) {
     if (hours > 0) return `${hours}h`;
     if (minutes > 0) return `${minutes}m`;
     if (seconds > 0) return 'Just now';
-    // if (seconds > 0) return `${seconds}s`;
+    
 
     return 'Just now';
 }
@@ -71,7 +71,7 @@ function makeLorem(size = 100) {
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
+    return Math.floor(Math.random() * (max - min + 1)) + min 
 }
 
 
@@ -101,7 +101,6 @@ function loadFromStorage(key) {
     return (data) ? JSON.parse(data) : undefined
 }
 
-// util function
 function getAssetSrc(name) {
     const path = `/src/assets/${name}`
     const modules = import.meta.glob('/src/assets/*', { eager: true })

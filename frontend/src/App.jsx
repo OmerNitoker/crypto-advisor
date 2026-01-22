@@ -43,9 +43,6 @@ export function App() {
             !user ?
               <Navigate to="/login" replace /> :
               <Onboarding user={user} />
-            // user.onboardingCompleted ?
-            //   <Navigate to="/" replace /> :
-            //   <Onboarding user={user} />
           }
           />
 

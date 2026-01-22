@@ -43,7 +43,7 @@
   gap: 1rem;
 
   font-size: 1.2rem;
-  color: #1e293b; // Tailwind Slate-800 vibes
+  color: #1e293b; 
 
   span {
     opacity: 0.85;
@@ -54,7 +54,7 @@
   width: 55px;
   height: 55px;
   border: 6px solid rgba(149, 157, 165, 0.3);
-  border-top-color: #6366f1; // Indigo-500
+  border-top-color: #6366f1; 
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }

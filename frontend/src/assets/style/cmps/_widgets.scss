@@ -197,11 +197,10 @@
 
 .meme-img {
     width: 100%;
-    max-height: 330px; // מספיק כדי שלא יהיה מפלצתי
+    max-height: 330px; 
     object-fit: contain;
     border-radius: 8px;
 
-    /* נותן קצת "פרודקט" */
-    background: #f8fafc; // slate-50 vibes
+    background: #f8fafc; 
     padding: 6px;
 }

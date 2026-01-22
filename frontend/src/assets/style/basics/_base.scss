@@ -17,7 +17,6 @@ body {
     color: $color-text-main;
 }
 
-/* קונטיינר כללי לאפליקציה */
 
 .app-shell {
     min-height: 100vh;
@@ -43,7 +42,6 @@ body {
     color: $color-danger;
 }
 
-/* Layout בסיסי */
 
 .app-shell {
     min-height: 100vh;
@@ -53,8 +51,5 @@ body {
 
 .app-main {
     flex: 1;
-    // max-width: 1100px;
-    // margin: 0 auto;
     width: 100%;
-    // padding: 1.2rem 1rem 2rem;
 }

@@ -5,7 +5,7 @@
   gap: $gap-md;
 }
 
-/* רספונסיביות */
+
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
