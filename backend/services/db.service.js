@@ -33,6 +33,7 @@ async function _connect() {
         const db = client.db(config.dbName)
         // const db = client.db('crypto-advisor')
         dbConn = db
+        
         return db
     } catch (err) {
         console.log('Cannot connect to DB', err)
