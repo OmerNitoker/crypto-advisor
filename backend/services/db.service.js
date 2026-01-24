@@ -25,15 +25,16 @@ async function getCollection(collectionName) {
 async function _connect() {
     if (dbConn) return dbConn
     try {
-        const client = await MongoClient.connect(config.dbURL, {
-            tls: true,
-            tlsAllowInvalidCertificates: true
-        })
-
+        const mongoOptions = process.env.NODE_ENV === 'production'
+            ? {
+                tls: true,
+                tlsAllowInvalidCertificates: true,
+            }
+            : {}
+        const client = await MongoClient.connect(config.dbURL, mongoOptions)
         const db = client.db(config.dbName)
-        // const db = client.db('crypto-advisor')
         dbConn = db
-        
+
         return db
     } catch (err) {
         console.log('Cannot connect to DB', err)
