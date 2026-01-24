@@ -49,6 +49,7 @@ export function LoginSignup() {
             throw err;
         } finally {
             clearState();
+            
         }
     }
 

@@ -21,7 +21,7 @@ async function getCoinsPrices(symbols, vsCurrency = 'usd') {
   if (!ids.length) return []
 
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids.join(',')}&vs_currencies=${vsCurrency}&include_24hr_change=true&x_cg_demo_api_key=${process.env.COINGECKO_API_KEY}`;
-
+  console.log("url:", url)
   const res = await fetch(url);
   if (!res.ok) {
     console.error('CoinGecko HTTP error', res.status, await res.text())
